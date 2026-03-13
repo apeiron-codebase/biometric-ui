@@ -93,7 +93,7 @@ const onSubmit = async (event: React.FormEvent) => {
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <Link
                     href="/forgot-password"
-                    className="ml-auto text-sm underline-offset-2 hover:underline"
+                    className="hidden"
                   >
                     Forgot your password?
                   </Link>
