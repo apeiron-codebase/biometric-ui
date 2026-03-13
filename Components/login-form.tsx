@@ -8,7 +8,6 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
@@ -41,20 +40,20 @@ const onSubmit = async (event: React.FormEvent) => {
     const result = await login({
       email: data.email as string,
       password: data.password as string,
-    }).unwrap();
+    })
 
     // // ✅ Access token (short-lived)
     // document.cookie = `accessToken=${result.accessToken}; path=/; max-age=900`;
 
     // // ✅ Refresh token (long-lived)
     // document.cookie = `refreshToken=${result.refreshToken}; path=/; max-age=604800`;
-    Cookies.set("accessToken", result.accessToken, { path: "/", });
-    Cookies.set("refreshToken", result.refreshToken, { path: "/" });
+    Cookies.set("token", result.token, { path: "/", });
+    
 
     console.log("Tokens set in cookies");
     console.log("tokens in cookies", Cookies.get("accessToken"), Cookies.get("refreshToken"));
     router.push("/dashboard");
-  } catch (_err) {
+  } catch {
     setErrorMessage("Invalid username or password");
   }
 };
@@ -104,27 +103,19 @@ const onSubmit = async (event: React.FormEvent) => {
               <Field>
                 <Button type="submit" disabled={isLoading}>Login</Button>
               </Field>
-              <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or continue with
-              </FieldSeparator>
-              <Field>
-                <Button variant="outline" type="button">
-                  <svg className="mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
-                    <rect width="10" height="10" x="1" y="1" fill="#f25022"/>
-                    <rect width="10" height="10" x="12" y="1" fill="#7fba00"/>
-                    <rect width="10" height="10" x="1" y="12" fill="#00a4ef"/>
-                    <rect width="10" height="10" x="12" y="12" fill="#ffb900"/>
-                  </svg>
-                  Login with Microsoft
-                </Button>
-              </Field>
-              {/* <FieldDescription className="text-center">
-                Don&apos;t have an account? <a href="#">Sign up</a>
-              </FieldDescription> */}
+              <FieldDescription className="text-center">
+                Don&apos;t have an account?
+                <Link
+                  href="/signup"
+                  className="text-green-600 hover:text-green-800"
+                >
+                  Sign up
+                </Link>
+              </FieldDescription>
             </FieldGroup>
           </form>
           <div className="relative hidden md:flex items-center justify-center border-l border-border p-6">
-          <div className="relative w-[220px] h-[220px] md:w-[260px] md:h-[260px] lg:w-[520px] lg:h-[520px]">
+          <div className="relative w-55 h-55 md:w-65 md:h-65 lg:w-130 lg:h-130">
             <Image
               src={collab}
               alt="Collaboration"
@@ -136,10 +127,10 @@ const onSubmit = async (event: React.FormEvent) => {
         </div>
         </CardContent>
       </Card>
-      <FieldDescription className="px-6 text-center">
+      {/* <FieldDescription className="px-6 text-center">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
+      </FieldDescription> */}
     </div>
   )
 }
