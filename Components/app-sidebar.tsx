@@ -27,7 +27,7 @@ export function AppSidebar() {
   const menuItems = [
     {
       title: "Check-in/out Monitor",
-      url: "/dashboard/checkin",
+      url: "/dashboard/checkin-checkout",
       icon: Clock,
     },
     {
@@ -70,7 +70,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     isActive={isActive}
-                    className="className = h-11 px-4 text-base font-medium
+                    className="h-11 px-4 text-base font-medium
               transition-colors duration-150 ease-in-out
               hover:bg-[hsl(var(--sidebar-accent))]
               data-[active=true]:bg-[hsl(var(--sidebar-primary))]
