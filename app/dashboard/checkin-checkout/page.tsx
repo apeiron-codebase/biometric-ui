@@ -38,6 +38,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import jsPDF from "jspdf";
 import autotable from "jspdf-autotable";
+import CustomBreadcrumb from "@/components/common/breadcrumb"
 
 // Mock data – replace with real API data + live updates
 const mockEmployees = [
@@ -96,6 +97,7 @@ export default function CheckInOutMonitorPage() {
 
   return (
     <div className="space-y-8 p-6 lg:p-5">
+      <CustomBreadcrumb page="Check-in / Check-out" />
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

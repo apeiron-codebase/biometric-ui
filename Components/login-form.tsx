@@ -16,8 +16,8 @@ import collab from "@/public/images/collab.png"
 import logo from "@/public/images/apeiron_pte_ltd_logo.jpg"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useLoginMutation } from "@/store/api/authApi"
-import Cookies from "js-cookie"
+
+
 
 export function LoginForm({
   className,
@@ -26,36 +26,21 @@ export function LoginForm({
 
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-
-  const [login, { isLoading }] = useLoginMutation();
-
-const onSubmit = async (event: React.FormEvent) => {
+const onSubmit = (event: React.FormEvent) => {
   event.preventDefault();
   setErrorMessage("");
 
   const formData = new FormData(event.target as HTMLFormElement);
   const data = Object.fromEntries(formData.entries());
 
-  try {
-    const result = await login({
-      email: data.email as string,
-      password: data.password as string,
-    })
+  console.log("Form Data:", data);
 
-    // // ✅ Access token (short-lived)
-    // document.cookie = `accessToken=${result.accessToken}; path=/; max-age=900`;
-
-    // // ✅ Refresh token (long-lived)
-    // document.cookie = `refreshToken=${result.refreshToken}; path=/; max-age=604800`;
-    Cookies.set("token", result.token, { path: "/", });
-    
-
-    console.log("Tokens set in cookies");
-    console.log("tokens in cookies", Cookies.get("accessToken"), Cookies.get("refreshToken"));
-    router.push("/dashboard");
-  } catch {
-    setErrorMessage("Invalid username or password");
+  if (!data.email || !data.password) {
+    setErrorMessage("Please fill all fields");
+    return;
   }
+
+  router.push("/dashboard");
 };
 
 
@@ -101,7 +86,7 @@ const onSubmit = async (event: React.FormEvent) => {
                 <Input id="password" name="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit" disabled={isLoading}>Login</Button>
+                <Button type="submit" >Login</Button>
               </Field>
               <FieldDescription className="text-center">
                 Don&apos;t have an account?
