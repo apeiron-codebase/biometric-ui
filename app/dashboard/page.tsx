@@ -1,3 +1,5 @@
+//homepage/dashboard page showing employee attendance stats
+
 "use client"  
 
 import React, { useEffect, useState } from "react"
