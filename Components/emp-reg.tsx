@@ -57,7 +57,7 @@ export function EmployeeRegistrationForm({
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "flex flex-col gap-6 rounded-xl bg-background p-6 shadow-md",
+       "flex flex-col gap-6 rounded-xl bg-background p-6 shadow-[0_-2px_6px_rgba(0,0,0,0.05),0_4px_10px_rgba(0,0,0,0.08)]",
         className
       )}
     >
