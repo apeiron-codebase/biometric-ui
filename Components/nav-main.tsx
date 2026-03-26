@@ -17,6 +17,7 @@ import {
   CalendarCheck,
   UserPlus,
   MapPin,
+  UserPen,
 } from 'lucide-react';
 import { Separator } from 'radix-ui';
 
@@ -24,7 +25,7 @@ const navItems = [
   { title: 'Check-in / Check-out', url: '/dashboard/checkin-checkout', icon: Clock },
   { title: 'Attendance', url: '/dashboard/attendance', icon: CalendarCheck },
   { title: 'Employee Registration', url: '/dashboard/employees', icon: UserPlus },
-  { title: 'Live Location Monitoring', url: '/dashboard/location', icon: MapPin },
+  { title: 'Employee Profile', url: '/dashboard/employee-profile', icon: UserPen },
 ];
 
 export function NavMain() {
