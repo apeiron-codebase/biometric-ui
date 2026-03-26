@@ -26,7 +26,7 @@ export function LoginForm({
 
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-const onSubmit = (event: React.FormEvent) => {
+const onSubmit = async (event: React.FormEvent) => {
   event.preventDefault();
   setErrorMessage("");
 
@@ -35,12 +35,34 @@ const onSubmit = (event: React.FormEvent) => {
 
   console.log("Form Data:", data);
 
-  if (!data.email || !data.password) {
+  if (!data.user_id || !data.password) {
     setErrorMessage("Please fill all fields");
     return;
   }
 
-  router.push("/dashboard");
+  try {
+    const response = await fetch('/api/admin-login', { // Replace with your actual endpoint
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        admin_id: data.user_id,
+        password: data.password
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || result.error) {
+      setErrorMessage(result.error || "Login failed");
+      return;
+    }
+
+    // On success
+    router.push("/dashboard");
+  } catch (err) {
+    setErrorMessage("Server error. Please try again.");
+    console.error(err);
+  }
 };
 
 
@@ -48,7 +70,7 @@ const onSubmit = (event: React.FormEvent) => {
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form onSubmit={onSubmit} className="p-6 md:p-8">
+          <form onSubmit={onSubmit} className="p-4 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <Image
@@ -64,12 +86,12 @@ const onSubmit = (event: React.FormEvent) => {
               </div>
               {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="user_id">Admin ID</FieldLabel>
                 <Input
-                  id="email"
-                  name="email"         
-                  type="email"
-                  placeholder="johndoe@apeironengg.com"
+                  id="user_id"
+                  name="user_id"         
+                  type="text"
+                  placeholder="001"
                   required
                 />
               </Field>
@@ -88,7 +110,7 @@ const onSubmit = (event: React.FormEvent) => {
               <Field>
                 <Button type="submit" >Login</Button>
               </Field>
-              <FieldDescription className="text-center">
+              {/* <FieldDescription className="text-center">
                 Don&apos;t have an account?
                 <Link
                   href="/signup"
@@ -96,11 +118,11 @@ const onSubmit = (event: React.FormEvent) => {
                 >
                   Sign up
                 </Link>
-              </FieldDescription>
+              </FieldDescription> */}
             </FieldGroup>
           </form>
-          <div className="relative hidden md:flex items-center justify-center border-l border-border p-6">
-          <div className="relative w-55 h-55 md:w-65 md:h-65 lg:w-130 lg:h-130">
+          <div className="relative hidden md:flex items-center justify-center border-l border-border p-4">
+          <div className="relative w-44 h-44 md:w-56 md:h-56 lg:w-100 lg:h-100">
             <Image
               src={collab}
               alt="Collaboration"

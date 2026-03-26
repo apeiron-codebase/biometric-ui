@@ -143,3 +143,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.js-plotly-plot .plotly .cursor-crosshair {
+  cursor: default !important;
+}

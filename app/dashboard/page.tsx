@@ -4,11 +4,16 @@
 
 import React, { useEffect, useState } from "react"
 import StatCard from "@/components/common/statcard"
+import BranchPerformanceChart from "@/components/graph"
+import { ChartPieDonutText } from "@/components/piechart"
+import { EventsPanel } from "@/components/alertpanel"
+
 
 interface Employee {
   id: number
   name: string
   status: string
+  className?: string
 }
 
 export default function DashboardPage() {
@@ -43,11 +48,22 @@ export default function DashboardPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard title="In Office" value={inOffice} />
-        <StatCard title="Not Checked-in" value={notCheckedIn} />
-        <StatCard title="Late" value={late} />
-      </div>
+     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+  <StatCard title="In Office" value={inOffice} type="office" />
+  <StatCard title="Not Checked-in" value={notCheckedIn} type="absent" />
+  <StatCard title="Late" value={late} type="late" />
+ 
+</div>
+   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <BranchPerformanceChart className="w-full h-[350px]" />
+  <ChartPieDonutText
+    inOffice={inOffice}
+    late={late}
+    absent={notCheckedIn}
+    className="w-full h-[380px] shadow-md"
+  />
+</div>
+    <EventsPanel/>
     </div>
   )
 }
