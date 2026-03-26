@@ -77,7 +77,7 @@ export function ChartPieDonutText({
       <CardContent className="flex flex-col items-center">
         <ChartContainer
           config={chartConfig}
-          className="w-[220px] aspect-square"
+          className="w-55 aspect-square"
         >
           <PieChart>
             <ChartTooltip
