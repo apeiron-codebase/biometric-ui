@@ -290,6 +290,7 @@ export default function BranchPerformanceChart({ className }: Props) {
           Period: d,
           Type: 'Client Office Site',
           Value: Math.floor(Math.random() * 20) + 10,
+
         });
       });
 

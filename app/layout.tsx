@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Biometric Attendance Dashboard",
+  title: "Apeiron Biometric",
   description: "A dashboard to monitor employee attendance using biometric data",
 };
 
@@ -30,8 +30,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-        {children}
-        <Toaster />
+          {children}
+          <Toaster />
         </Providers>
       </body>
     </html>

@@ -1,9 +1,13 @@
 //homepage/dashboard page showing employee attendance stats
 
-"use client"  
+"use client"
 
 import React, { useEffect, useState } from "react"
 import StatCard from "@/components/common/statcard"
+import BranchPerformanceChart from "@/components/graph"
+import { ChartPieDonutText } from "@/components/piechart"
+import { EventsPanel } from "@/components/alertpanel"
+
 import BranchPerformanceChart from "@/components/graph"
 import { ChartPieDonutText } from "@/components/piechart"
 import { EventsPanel } from "@/components/alertpanel"
@@ -13,6 +17,7 @@ interface Employee {
   id: number
   name: string
   status: string
+  className?: string
   className?: string
 }
 

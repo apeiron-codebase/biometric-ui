@@ -17,11 +17,14 @@ import autoTable from 'jspdf-autotable';
 import { EmployeeRecord, StatusFilter } from './types';
 
 // components
-import StatsCards from '@/components/checkin/stats-cards';
 import Filters from '@/components/checkin/filters';
 import ExportButtons from '@/components/checkin/export-buttons';
 import EmployeeTable, { useCheckInColumns } from '@/components/checkin/employee-table';
 import PaginationControls from '@/components/checkin/pagination-controls';
+import KPICards from '@/components/checkin/kpi-card';
+
+//title dd/mm/yyyy
+const today = new Date(2026, 2, 24);
 
 export default function CheckInOutPage() {
   const [records, setRecords] = useState<EmployeeRecord[]>([]);
@@ -154,31 +157,54 @@ export default function CheckInOutPage() {
 
   // --- Render --------------------------
   return (
-    <div className="space-y-6 p-1">
-      <StatsCards {...stats} />
+  <div className="space-y-6 p-2">
 
-      {/* Controls row: filters left, export right */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <Filters
-          globalFilter={globalFilter}
-          onGlobalFilterChange={handleGlobalFilterChange}
-          statusFilter={statusFilter}
-          onStatusFilterChange={handleStatusFilterChange}
-        />
-        <ExportButtons
-          onExportCSV={exportToCSV}
-          onExportPDF={exportToPDF}
-          hasData={filteredData.length > 0}
-        />
-      </div>
+    <div className="mb-8">
+            <h1 className="text-lg font-bold text-gray-900">Workforce Activity Monitor</h1>
+            <p className="text-gray-400 mt-1 text-sm">
+              {today.toLocaleDateString('en-US', {
+                weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+              })}
+            </p>
+          </div>
 
-      <EmployeeTable table={table} columnCount={columns.length} />
+    {/* KPI CARDS */}
+    <KPICards
+      total={stats.total}
+      present={stats.present}
+      inOffice={stats.inOffice}
+      absent={stats.absent}
+      late={Math.floor(stats.present * 0.2)} // mock late logic
+    />
 
-      <PaginationControls table={table} totalFiltered={filteredData.length} />
+    {/* FILTER + EXPORT */}
+    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border p-4 rounded-xl">
+      <Filters
+        globalFilter={globalFilter}
+        onGlobalFilterChange={handleGlobalFilterChange}
+        statusFilter={statusFilter}
+        onStatusFilterChange={handleStatusFilterChange}
+      />
 
-      <div className="h-96 rounded-lg border bg-muted/40 flex items-center justify-center mt-8">
-        <p className="text-muted-foreground">Live Location Monitoring (to be integrated)</p>
-      </div>
+      <ExportButtons
+        onExportCSV={exportToCSV}
+        onExportPDF={exportToPDF}
+        hasData={filteredData.length > 0}
+      />
     </div>
-  );
+
+    {/* TABLE */}
+    <div className="border border-primary rounded-xl overflow-hidden">
+      <EmployeeTable table={table} columnCount={columns.length} />
+    </div>
+
+    {/* PAGINATION */}
+    <div className="border border-[#6BCC22]/20 rounded-xl p-2">
+      <PaginationControls
+        table={table}
+        totalFiltered={filteredData.length}
+      />
+    </div>
+  </div>
+);
 }

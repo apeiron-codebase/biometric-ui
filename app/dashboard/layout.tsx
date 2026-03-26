@@ -30,18 +30,21 @@ export default function DashboardLayout({
   const breadcrumbs = pathSegments.map((segment, index) => {
     const href = "/" + pathSegments.slice(0, index + 1).join("/");
     const label = segment.charAt(0).toUpperCase() + segment.slice(1);
-
     return { href, label };
   });
+
   return (
     <TooltipProvider>
       <SidebarProvider defaultOpen={true}>
-        <div className="flex min-h-screen w-full">
+        <div className="flex h-screen w-full overflow-hidden bg-gray-50">
+          {/* Sidebar */}
           <AppSidebar />
 
-          <SidebarInset className="flex flex-col flex-1 min-w-0">
-            {/* Top bar with collapse button */}
-            <header className="flex h-14 shrink-0 items-center gap-3 border-b bg-background px-4 lg:px-6">
+          {/* Main Area */}
+          <SidebarInset className="flex flex-col flex-1 min-w-0 overflow-hidden">
+            
+            {/* FIXED Top Bar - Never Scrolls */}
+            <header className="flex h-14 shrink-0 items-center gap-3 border-b bg-white px-4 lg:px-6 z-50">
               <SidebarTrigger className="-ml-1" />
               <Breadcrumb>
                 <BreadcrumbList>
@@ -52,18 +55,15 @@ export default function DashboardLayout({
                           {crumb.label}
                         </BreadcrumbLink>
                       </BreadcrumbItem>
-
-                      {index < breadcrumbs.length - 1 && (
-                        <BreadcrumbSeparator />
-                      )}
+                      {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
                     </React.Fragment>
                   ))}
                 </BreadcrumbList>
               </Breadcrumb>
             </header>
 
-            {/* Main content*/}
-            <main className="flex-1 overflow-auto bg-background p-4 lg:p-6">
+            {/* Scrollable Main Content */}
+            <main className="flex-1 overflow-auto p-4 lg:p-6 bg-gray-50">
               {children}
             </main>
           </SidebarInset>
