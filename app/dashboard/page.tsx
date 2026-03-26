@@ -8,16 +8,11 @@ import BranchPerformanceChart from "@/components/graph"
 import { ChartPieDonutText } from "@/components/piechart"
 import { EventsPanel } from "@/components/alertpanel"
 
-import BranchPerformanceChart from "@/components/graph"
-import { ChartPieDonutText } from "@/components/piechart"
-import { EventsPanel } from "@/components/alertpanel"
-
 
 interface Employee {
   id: number
   name: string
   status: string
-  className?: string
   className?: string
 }
 
