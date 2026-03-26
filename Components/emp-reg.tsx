@@ -24,34 +24,58 @@ export function EmployeeRegistrationForm({
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
+  const form = e.currentTarget;
+  const rawFormData = new FormData(form);
 
-    // ✅ validation
-    if (
-      !formData.get("image1") ||
-      !formData.get("image2") ||
-      !formData.get("image3")
-    ) {
-      toast.error("Please upload all 3 images");
-      setLoading(false);
-      return;
-    }
+  // ✅ Extract values
+  const employee_code = rawFormData.get("employee_code") as string;
+  const employee_name = rawFormData.get("employee_name") as string;
 
+  const image1 = rawFormData.get("image1") as File;
+  const image2 = rawFormData.get("image2") as File;
+  const image3 = rawFormData.get("image3") as File;
+
+  // ✅ Strong validation
+  if (
+    !employee_code ||
+    !employee_name ||
+    !image1 || image1.size === 0 ||
+    !image2 || image2.size === 0 ||
+    !image3 || image3.size === 0
+  ) {
+    toast.error("Please fill all fields and upload 3 valid images");
+    setLoading(false);
+    return;
+  }
+
+  // ✅ Build FormData explicitly (clean + predictable)
+  const formData = new FormData();
+  formData.append("employee_code", employee_code);
+  formData.append("employee_name", employee_name);
+  formData.append("image1", image1);
+  formData.append("image2", image2);
+  formData.append("image3", image3);
+
+  try {
     const { ok, data, error } = await registerEmployee(formData);
 
-    if (ok && data) {
-      toast.success(data.message || "Employee registered successfully");
-      e.currentTarget.reset(); // ✅ clear form
+    if (ok) {
+      toast.success(data?.message || "Employee registered successfully");
+      form.reset();
     } else {
-      toast.error(data?.message || "Server error");
-      console.error(error);
+      toast.error(data?.message || "Failed to register employee");
+      console.error("API Error:", error);
     }
+  } catch (err) {
+    console.error("Unexpected Error:", err);
+    toast.error("Something went wrong");
+  }
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
 
   return (
     <form

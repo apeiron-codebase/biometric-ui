@@ -55,12 +55,12 @@ export default function DashboardPage() {
  
 </div>
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-  <BranchPerformanceChart className="w-full h-[350px]" />
+  <BranchPerformanceChart className="w-full h-95.25" />
   <ChartPieDonutText
     inOffice={inOffice}
     late={late}
     absent={notCheckedIn}
-    className="w-full h-[380px] shadow-md"
+    className="w-full h-95 shadow-md"
   />
 </div>
     <EventsPanel/>
