@@ -16,12 +16,12 @@ import {
   Clock,
   CalendarCheck,
   UserPlus,
-  MapPin,
   UserPen,
+  Layout,
 } from 'lucide-react';
-import { Separator } from 'radix-ui';
 
 const navItems = [
+  { title: 'Dashboard', url: '/dashboard', icon: Layout },
   { title: 'Check-in / Check-out', url: '/dashboard/checkin-checkout', icon: Clock },
   { title: 'Attendance', url: '/dashboard/attendance', icon: CalendarCheck },
   { title: 'Employee Registration', url: '/dashboard/employees', icon: UserPlus },
